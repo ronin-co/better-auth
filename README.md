@@ -18,6 +18,83 @@ const auth = betterAuth({
 });
 ```
 
+Or if you want to use a custom client instance:
+
+```typescript
+import { betterAuth } from 'better-auth';
+import { ronin } from "@ronin/better-auth";
+import { createSyntaxFactory } from 'ronin';
+
+const client = createSyntaxFactory({
+  token: process.env.RONIN_TOKEN,
+});
+
+const auth = betterAuth({
+  database: ronin(client),
+  // ...
+});
+```
+
+## Schema
+
+Better Auth requires a number of schema models / tables to be created in your database. This is referred in the Better Auth documentation as the "core schema".
+
+To help get started, here is that "core schema" translated to a RONIN schema:
+
+```ts
+// schema/index.ts
+
+import { blob, boolean, date, link, model, string } from 'ronin/schema';
+
+export const User = model({
+  slug: 'user',
+  fields: {
+    email: string({ required: true, unique: true }),
+    emailVerified: boolean({ required: true }),
+    image: blob(),
+    name: string({ required: true }),
+  },
+});
+
+export const Session = model({
+  slug: 'session',
+  fields: {
+    expiresAt: date({ required: true }),
+    ipAddress: string(),
+    token: string({ required: true, unique: true }),
+    user: link({ required: true, target: 'user' }),
+    userAgent: string(),
+  },
+});
+
+export const Account = model({
+  slug: 'account',
+  pluralSlug: 'accounts',
+  fields: {
+    accessToken: string(),
+    accessTokenExpiresAt: date(),
+    accountId: string({ required: true }),
+    idToken: string(),
+    password: string(),
+    providerId: string({ required: true }),
+    refreshToken: string(),
+    refreshTokenExpiresAt: date(),
+    scope: string(),
+    user: link({ required: true, target: 'user' }),
+  },
+});
+
+export const Verification = model({
+  slug: 'verification',
+  pluralSlug: 'verifications',
+  fields: {
+    expiresAt: date({ required: true }),
+    identifier: string({ required: true }),
+    value: string({ required: true }),
+  },
+});
+```
+
 ## Testing
 
 Use the following command to run the test suite:
