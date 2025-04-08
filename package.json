@@ -41,7 +41,6 @@
     "@ronin/compiler": "0.17.22",
     "@ronin/engine": "0.1.16",
     "@types/bun": "1.2.8",
-    "hono": "4.7.6",
     "tsup": "8.4.0",
     "typescript": "5.8.2"
   },
