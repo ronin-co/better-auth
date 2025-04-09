@@ -12,7 +12,7 @@ export const User = model({
   },
 });
 
-export const Sessions = model({
+export const Session = model({
   slug: 'session',
   pluralSlug: 'sessions',
   fields: {
@@ -20,11 +20,7 @@ export const Sessions = model({
     ipAddress: string(),
     token: string({ required: true, unique: true }),
     user: link({
-      actions: {
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
-      },
-      // required: true,
+      required: true,
       target: 'user',
     }),
     userAgent: string(),
@@ -37,9 +33,7 @@ export const Account = model({
   fields: {
     accessToken: string(),
     accessTokenExpiresAt: date(),
-    accountId: string({
-      // required: true
-    }),
+    accountId: string({ required: true }),
     idToken: string(),
     password: string(),
     providerId: string({ required: true }),
@@ -47,11 +41,7 @@ export const Account = model({
     refreshTokenExpiresAt: date(),
     scope: string(),
     user: link({
-      actions: {
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE',
-      },
-      // required: true,
+      required: true,
       target: 'user',
     }),
   },

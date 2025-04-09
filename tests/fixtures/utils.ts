@@ -6,7 +6,7 @@ import { betterAuth } from 'better-auth';
 import { bearer } from 'better-auth/plugins';
 import { createSyntaxFactory } from 'ronin';
 
-import { Account, Sessions, User, Verification } from '@/fixtures/schema';
+import { Account, Session, User, Verification } from '@/fixtures/schema';
 import { ronin } from '@/index';
 
 import type { Model, Query, ResultRecord } from '@ronin/compiler';
@@ -22,7 +22,7 @@ export const DEFAULT_MODELS = [
   User,
 
   Account,
-  Sessions,
+  Session,
   Verification,
 ] as unknown as Array<Model>;
 
