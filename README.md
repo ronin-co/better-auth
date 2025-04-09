@@ -37,9 +37,9 @@ const auth = betterAuth({
 
 ## Schema
 
-Better Auth requires a number of schema models / tables to be created in your database. This is referred in the Better Auth documentation as the "core schema".
+Better Auth requires a number of schema models / tables to be created in your database. This is referred to in the Better Auth documentation as the "core schema".
 
-To help get started, here is that "core schema" translated to a RONIN schema:
+To help get started, here is that "core schema" translated to a RONIN database schema:
 
 ```ts
 // schema/index.ts
