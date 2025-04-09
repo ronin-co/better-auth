@@ -76,8 +76,8 @@ export const getModel = async (
   factory: ReturnType<typeof createSyntaxFactory>,
   slug: string,
 ): Promise<Model> => {
-  const [model] = await factory.get.models.with.slug<Array<BaseModel>>(slug);
-
+  // @ts-expect-error `list` queries are not currently natively typed.
+  const model = (await factory.list.model(slug)) as BaseModel | null;
   if (!model)
     throw new BetterAuthError(
       'Failed to resolve model',
