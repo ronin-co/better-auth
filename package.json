@@ -38,7 +38,7 @@
   "dependencies": {},
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "@ronin/compiler": "0.17.22",
+    "@ronin/compiler": "0.18.1",
     "@ronin/engine": "0.1.16",
     "@types/bun": "1.2.8",
     "tsup": "8.4.0",
