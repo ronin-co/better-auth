@@ -13,7 +13,7 @@
       },
       "peerDependencies": {
         "better-auth": ">=1.2.5",
-        "ronin": ">=6.4.3",
+        "ronin": ">=6.4.16",
       },
     },
   },
