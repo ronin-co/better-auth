@@ -1,4 +1,17 @@
-import createClient from 'ronin';
+import {
+  add,
+  alter,
+  batch,
+  count,
+  create,
+  drop,
+  get,
+  list,
+  remove,
+  set,
+  sql,
+  sqlBatch,
+} from 'ronin';
 
 import {
   convertWhereClause,
@@ -47,7 +60,20 @@ type SyntaxFactory = ReturnType<typeof createSyntaxFactory>;
  */
 export const ronin = (client?: SyntaxFactory): AdapterInstance => {
   return (): Adapter => {
-    const factory = client ?? createClient({ token: '1234' });
+    const factory = client ?? {
+      add,
+      alter,
+      batch,
+      count,
+      create,
+      drop,
+      get,
+      list,
+      remove,
+      set,
+      sql,
+      sqlBatch,
+    };
 
     return {
       id: 'ronin',
