@@ -189,7 +189,6 @@ export const transformOrderedBy = (sortBy?: {
  */
 export const transformOutput = (
   data: ResultRecordBase<Date> | null,
-  model: string,
 ): Record<string, unknown> | null => {
   if (!data || data === null) return null;
 
