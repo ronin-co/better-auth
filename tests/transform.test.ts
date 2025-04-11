@@ -358,7 +358,7 @@ describe('transform', () => {
             createdAt: instructions.createdAt,
             updatedAt: instructions.updatedAt,
           },
-          user: instructions.userId,
+          userId: instructions.userId,
         });
       });
 
@@ -384,7 +384,7 @@ describe('transform', () => {
             updatedAt: instructions.updatedAt,
           },
           token: instructions.token,
-          user: instructions.userId,
+          userId: instructions.userId,
           userAgent: '',
         });
       });
@@ -603,7 +603,7 @@ describe('transform', () => {
             createdAt: instruction.createdAt,
             updatedAt: instruction.updatedAt,
           },
-          user: instruction.userId,
+          userId: instruction.userId,
         },
       ]);
     });
@@ -678,7 +678,7 @@ describe('transform', () => {
       const { auth, client } = await init();
 
       const { user } = await auth.api.signUpEmail({ body: TEST_USER });
-      const account = await client.get.account.with.user(user.id);
+      const account = await client.get.account.with.userId(user.id);
       const transformed = transformOutput(account, 'account');
 
       expect(account).toBeDefined();
@@ -699,7 +699,7 @@ describe('transform', () => {
         refreshToken: null,
         refreshTokenExpiresAt: null,
         scope: null,
-        user: expect.any(String),
+        userId: expect.any(String),
       });
 
       expect(transformed).toBeDefined();
@@ -739,7 +739,7 @@ describe('transform', () => {
         expiresAt: expect.any(Date),
         ipAddress: '',
         token: expect.any(String),
-        user: expect.any(String),
+        userId: expect.any(String),
         userAgent: '',
       });
 
