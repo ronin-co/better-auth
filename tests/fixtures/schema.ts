@@ -19,7 +19,7 @@ export const Session = model({
     expiresAt: date({ required: true }),
     ipAddress: string(),
     token: string({ required: true, unique: true }),
-    user: link({
+    userId: link({
       required: true,
       target: 'user',
     }),
@@ -40,7 +40,7 @@ export const Account = model({
     refreshToken: string(),
     refreshTokenExpiresAt: date(),
     scope: string(),
-    user: link({
+    userId: link({
       required: true,
       target: 'user',
     }),

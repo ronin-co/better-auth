@@ -358,7 +358,7 @@ describe('transform', () => {
             createdAt: instructions.createdAt,
             updatedAt: instructions.updatedAt,
           },
-          user: instructions.userId,
+          userId: instructions.userId,
         });
       });
 
@@ -384,7 +384,7 @@ describe('transform', () => {
             updatedAt: instructions.updatedAt,
           },
           token: instructions.token,
-          user: instructions.userId,
+          userId: instructions.userId,
           userAgent: '',
         });
       });
@@ -603,7 +603,7 @@ describe('transform', () => {
             createdAt: instruction.createdAt,
             updatedAt: instruction.updatedAt,
           },
-          user: instruction.userId,
+          userId: instruction.userId,
         },
       ]);
     });
@@ -669,7 +669,7 @@ describe('transform', () => {
 
   describe('transformOutput', () => {
     test('with `null` data', () => {
-      const transformed = transformOutput(null, 'account');
+      const transformed = transformOutput(null);
       expect(transformed).toBeDefined();
       expect(transformed).toBe(null);
     });
@@ -678,8 +678,8 @@ describe('transform', () => {
       const { auth, client } = await init();
 
       const { user } = await auth.api.signUpEmail({ body: TEST_USER });
-      const account = await client.get.account.with.user(user.id);
-      const transformed = transformOutput(account, 'account');
+      const account = await client.get.account.with.userId(user.id);
+      const transformed = transformOutput(account);
 
       expect(account).toBeDefined();
       expect(account).toMatchObject({
@@ -699,7 +699,7 @@ describe('transform', () => {
         refreshToken: null,
         refreshTokenExpiresAt: null,
         scope: null,
-        user: expect.any(String),
+        userId: expect.any(String),
       });
 
       expect(transformed).toBeDefined();
@@ -725,7 +725,7 @@ describe('transform', () => {
 
       const { token } = await auth.api.signUpEmail({ body: TEST_USER });
       const session = await client.get.session.with.token(token as string);
-      const transformed = transformOutput(session, 'session');
+      const transformed = transformOutput(session);
 
       expect(session).toBeDefined();
       expect(session).toMatchObject({
@@ -739,7 +739,7 @@ describe('transform', () => {
         expiresAt: expect.any(Date),
         ipAddress: '',
         token: expect.any(String),
-        user: expect.any(String),
+        userId: expect.any(String),
         userAgent: '',
       });
 
@@ -761,7 +761,7 @@ describe('transform', () => {
 
       const signUp = await auth.api.signUpEmail({ body: TEST_USER });
       const user = await client.get.user.with.id(signUp.user.id);
-      const transformed = transformOutput(user, 'user');
+      const transformed = transformOutput(user);
 
       expect(user).toBeDefined();
       expect(user).toMatchObject({
@@ -793,18 +793,15 @@ describe('transform', () => {
     // TODO(@nurodev): Add `verification` test
 
     test('with an unknown record', () => {
-      const transformed = transformOutput(
-        {
-          id: 'usr_1234',
-          ronin: {
-            createdAt: new Date(),
-            createdBy: null,
-            updatedAt: new Date(),
-            updatedBy: null,
-          },
+      const transformed = transformOutput({
+        id: 'usr_1234',
+        ronin: {
+          createdAt: new Date(),
+          createdBy: null,
+          updatedAt: new Date(),
+          updatedBy: null,
         },
-        'foobar',
-      );
+      });
 
       expect(transformed).toBeDefined();
       expect(transformed).toMatchObject({

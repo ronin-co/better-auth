@@ -62,7 +62,7 @@ export const Session = model({
     expiresAt: date({ required: true }),
     ipAddress: string(),
     token: string({ required: true, unique: true }),
-    user: link({ required: true, target: 'user' }),
+    userId: link({ required: true, target: 'user' }),
     userAgent: string(),
   },
 });
@@ -80,7 +80,7 @@ export const Account = model({
     refreshToken: string(),
     refreshTokenExpiresAt: date(),
     scope: string(),
-    user: link({ required: true, target: 'user' }),
+    userId: link({ required: true, target: 'user' }),
   },
 });
 

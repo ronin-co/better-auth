@@ -86,7 +86,7 @@ export const ronin = (client?: SyntaxFactory): AdapterInstance => {
       create: async ({ data, model }) => {
         const transformed = await transformInput(data, model);
         const record = await factory.add[model].with<ResultRecordBase<Date>>(transformed);
-        return transformOutput(record, model);
+        return transformOutput(record);
       },
       delete: async ({ model, where = [] }) => {
         const instructions = convertWhereClause(where);
@@ -113,14 +113,14 @@ export const ronin = (client?: SyntaxFactory): AdapterInstance => {
           with: transformed,
         });
 
-        return results.map((result) => transformOutput(result, slug));
+        return results.map((result) => transformOutput(result));
       },
       findOne: async ({ model, where }) => {
         const instructions = convertWhereClause(where);
         const result = await factory.get[model].with<ResultRecordBase<Date> | null>(
           instructions,
         );
-        return transformOutput(result, model);
+        return transformOutput(result);
       },
       update: async ({ model, update, where = [] }) => {
         const instructions = convertWhereClause(where);
@@ -129,7 +129,7 @@ export const ronin = (client?: SyntaxFactory): AdapterInstance => {
           with: instructions,
           to: transformed as Record<string, unknown>,
         });
-        return transformOutput(result, model);
+        return transformOutput(result);
       },
       updateMany: async ({ model: slug, update, where = [] }) => {
         const model = await getModel(factory, slug);

@@ -96,9 +96,6 @@ export const getModel = async (
 /**
  * Transforms a provided inout data or query & converts it to RONIN query instructions.
  *
- * The primary purpose of thos transformer is that some fields of Better Auth require
- * remapping. Such as `userId` to `user` for the `account` and `session` models, etc.
- *
  * @param data - The data to be transformed.
  * @param model - The model to be used for the transformation.
  *
@@ -126,13 +123,6 @@ export const transformInput = async <
     });
 
   for (const [key, value] of Object.entries(values)) {
-    // We recommend customers use `user` instead of `userId` for their account & session
-    // model fields. As such, we need to remap this field to `userId` for the RONIN query.
-    if (key === 'userId' && ['account', 'session'].includes(model)) {
-      properties.set('user', value);
-      continue;
-    }
-
     // When signing in / up with OAuth we can be provided a URL string as a link to an
     // image for a user. As such, we need to pull this image so we can provide it as a
     // `Blob` to RONIN when creating the user.
@@ -199,7 +189,6 @@ export const transformOrderedBy = (sortBy?: {
  */
 export const transformOutput = (
   data: ResultRecordBase<Date> | null,
-  model: string,
 ): Record<string, unknown> | null => {
   if (!data || data === null) return null;
 
@@ -213,17 +202,6 @@ export const transformOutput = (
 
   for (const [key, value] of Object.entries(values)) {
     properties.set(key, value);
-
-    switch (model) {
-      case 'account':
-      case 'session': {
-        if (key === 'user') {
-          properties.set('userId', value);
-          properties.delete('user');
-        }
-        break;
-      }
-    }
   }
 
   return Object.fromEntries(properties);
